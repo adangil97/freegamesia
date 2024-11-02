@@ -8,9 +8,7 @@ class GameRepository(
     private val gameRemoteDataSource: GameRemoteDataSource
 ) {
 
-    fun getAll(
-        forceRefresh: Boolean
-    ) = networkBoundResource(
+    fun getAll(forceRefresh: Boolean) = networkBoundResource(
         query = {
             gameLocalDataSource.getAll()
         },

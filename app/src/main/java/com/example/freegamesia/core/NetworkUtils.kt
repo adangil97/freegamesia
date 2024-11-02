@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-inline fun <ResultType, RequestType> networkBoundResource(
-    crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
-    crossinline onFetchFailed: suspend (Throwable) -> Unit = { },
-    crossinline shouldFetch: (ResultType) -> Boolean = { true }
-) = flow<Resource<ResultType>> {
+fun <ResultType, RequestType> networkBoundResource(
+    query: () -> Flow<ResultType>,
+    fetch: suspend () -> RequestType,
+    saveFetchResult: suspend (RequestType) -> Unit,
+    onFetchFailed: suspend (Throwable) -> Unit = { },
+    shouldFetch: (ResultType) -> Boolean = { true }
+): Flow<Resource<ResultType>> = flow {
     emit(Resource.Loading(null))
     val data = query().first()
 

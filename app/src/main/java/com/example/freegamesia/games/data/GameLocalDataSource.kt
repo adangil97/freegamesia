@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface GameLocalDataSource {
 
-    fun saveAll(games: List<Game>)
+    suspend fun saveAll(games: List<Game>)
 
     fun getAll(): Flow<List<Game>>
 
     suspend fun getById(id: Long): Game?
 
-    fun searchByQuery(query: String): Flow<Game>
+    fun searchByQuery(query: String): Flow<List<Game>>
 
-    fun searchByCategory(category: String): Flow<Game>
+    fun searchByCategory(category: String): Flow<List<Game>>
 }

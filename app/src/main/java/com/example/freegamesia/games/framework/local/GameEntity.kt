@@ -9,11 +9,11 @@ data class GameEntity(
     val id: Long,
     val title: String,
     val description: String,
-    val gender: String,
+    val category: String,
     val platform: String,
     val image: String,
     val developer: String,
     val url: String,
     val releaseDate: String,
-    val lastUpdate: Long
+    val requireUpdatedAt: Long
 )

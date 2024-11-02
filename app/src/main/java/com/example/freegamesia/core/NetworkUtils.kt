@@ -1,36 +1,41 @@
 package com.example.freegamesia.core
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-fun <ResultType, RequestType> networkBoundResource(
-    query: () -> Flow<ResultType>,
-    fetch: suspend () -> RequestType,
-    saveFetchResult: suspend (RequestType) -> Unit,
-    onFetchFailed: suspend (Throwable) -> Unit = { },
-    shouldFetch: (ResultType) -> Boolean = { true }
-): Flow<Resource<ResultType>> = flow {
-    emit(Resource.Loading(null))
-    val data = query().first()
+inline fun <ResultType, RequestType> networkBoundResource(
+    crossinline query: () -> Flow<ResultType>,
+    crossinline fetch: suspend () -> RequestType,
+    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+    crossinline shouldFetch: (ResultType) -> Boolean = { true },
+    crossinline onFetchFailed: (Throwable) -> Unit = { }
+) = flow {
 
-    val flow = if (shouldFetch(data)) {
-        emit(Resource.Loading(data))
+    // Obtener datos locales una sola vez y reutilizarlos
+    val localFlow = query()
+    val localData = localFlow.firstOrNull()
+    emit(Resource.Loading(localData))
 
+    if (localData == null || shouldFetch(localData)) {
         try {
             saveFetchResult(fetch())
-            query().map { Resource.Success(it) }
-        } catch (throwable: Throwable) {
-            onFetchFailed(throwable)
-            query().map { Resource.Error(throwable.message.orEmpty(), it) }
+            // Reutilizar el flow con map para mejor rendimiento
+            localFlow
+                .map { Resource.Success(it) }
+                .collect { emit(it) }
+        } catch (e: Exception) {
+            onFetchFailed(e)
+            localFlow
+                .map { Resource.Error(e.message.orEmpty(), it) }
+                .collect { emit(it) }
         }
     } else {
-        query().map { Resource.Success(it) }
+        localFlow
+            .map { Resource.Success(it) }
+            .collect { emit(it) }
     }
-
-    emitAll(flow)
 }
 
 sealed class Resource<T> {

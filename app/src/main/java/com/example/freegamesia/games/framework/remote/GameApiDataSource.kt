@@ -20,8 +20,4 @@ class GameApiDataSource @Inject constructor(
             listOf()
         }
     }
-
-    override suspend fun getById(id: Long): Game? = withContext(Dispatchers.IO) {
-        gameApiClient.getById(id).body()?.toGame()
-    }
 }

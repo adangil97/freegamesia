@@ -1,7 +1,6 @@
 package com.example.freegamesia.games.data
 
 import com.example.freegamesia.core.networkBoundResource
-import com.example.freegamesia.games.domain.Game
 
 class GameRepository(
     private val gameLocalDataSource: GameLocalDataSource,
@@ -27,10 +26,6 @@ class GameRepository(
                     forceRefresh
         }
     )
-
-    suspend fun getById(id: Long): Game? {
-        return gameLocalDataSource.getById(id) ?: gameRemoteDataSource.getById(id)
-    }
 
     fun searchByQuery(query: String) = gameLocalDataSource.searchByQuery(query)
 

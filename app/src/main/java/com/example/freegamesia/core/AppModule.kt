@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -20,7 +21,7 @@ object AppModule {
         .build()
 
     @Provides
-    fun database(context: Context) = Room.databaseBuilder(
+    fun database(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         AppDatabase::class.java, "game-database"
     ).build()

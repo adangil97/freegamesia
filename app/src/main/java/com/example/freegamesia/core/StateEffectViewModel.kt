@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+
+typealias NoActions = Unit
 
 /**
  * Simple MVI ViewModel.
@@ -17,7 +20,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class StateEffectViewModel<State, Action>(
     initialState: State,
-    initialAction: Action
+    initialAction: Action? = null
 ) : ViewModel() {
     protected val mutableState: MutableStateFlow<State> = MutableStateFlow(initialState)
     val state: StateFlow<State> = mutableState.asStateFlow()
@@ -30,7 +33,9 @@ abstract class StateEffectViewModel<State, Action>(
     ) {
         viewModelScope.launch {
             actions.flatMapLatest { actionEvent ->
-                request(actionEvent)
+                actionEvent?.let {
+                    request(it)
+                } ?: flowOf()
             }.collectLatest(response)
         }
     }

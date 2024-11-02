@@ -9,6 +9,8 @@ interface GameLocalDataSource {
 
     fun getAll(): Flow<List<Game>>
 
+    suspend fun getById(id: Long): Game?
+
     fun searchByQuery(query: String): Flow<List<Game>>
 
     fun searchByCategory(category: String): Flow<List<Game>>

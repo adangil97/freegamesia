@@ -8,6 +8,7 @@ import com.example.freegamesia.games.framework.local.GameDBDataSource
 import com.example.freegamesia.games.framework.local.GameDao
 import com.example.freegamesia.games.framework.remote.GameApiClient
 import com.example.freegamesia.games.framework.remote.GameApiDataSource
+import com.example.freegamesia.games.usecases.GetGameById
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByCategory
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
@@ -50,6 +51,9 @@ abstract class GameModule {
             gameLocalDataSource = gameLocalDataSource,
             gameRemoteDataSource = gameRemoteDataSource
         )
+
+        @Provides
+        fun provideGetGameById(gameRepository: GameRepository) = GetGameById(gameRepository)
 
         @Provides
         fun providesGetGames(gameRepository: GameRepository) = GetGames(gameRepository)

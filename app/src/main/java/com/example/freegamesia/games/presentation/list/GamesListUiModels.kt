@@ -4,7 +4,7 @@ import com.example.freegamesia.games.presentation.GameUiModel
 
 data class GamesListUiState(
     val isLoading: Boolean = false,
-    val games: List<GameUiModel> = listOf(),
+    val games: Map<String, List<GameUiModel>> = mapOf(),
     val query: String = "",
     val category: String = "",
     val isFromError: Boolean = false

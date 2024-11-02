@@ -26,6 +26,10 @@ class GameDBDataSource @Inject constructor(
         }
     }
 
+    override suspend fun getById(id: Long): Game? = withContext(Dispatchers.IO) {
+        gameDao.getById(id)?.toGame()
+    }
+
     override fun searchByQuery(query: String): Flow<List<Game>> {
         return gameDao.getAllByQuery(query).map { gameEntityList ->
             gameEntityList.map { gameEntity ->

@@ -20,17 +20,15 @@ class GameDBDataSource @Inject constructor(
             }
         }
 
-    override suspend fun update(id: Long, gameRequest: GameRequest) {
-        withContext(Dispatchers.IO) {
-            getById(id)?.let {
-                gameDao.save(
-                    it.toGameEntity().copy(
-                        title = gameRequest.title,
-                        platform = gameRequest.platform,
-                        description = gameRequest.description
-                    )
-                )
-            }
+    override suspend fun update(id: Long, gameRequest: GameRequest) = withContext(Dispatchers.IO) {
+        getById(id)?.let {
+            val updatedGame = it.copy(
+                title = gameRequest.title,
+                platform = gameRequest.platform,
+                description = gameRequest.description
+            )
+            gameDao.save(updatedGame.toGameEntity())
+            updatedGame
         }
     }
 

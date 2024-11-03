@@ -8,7 +8,7 @@ interface GameLocalDataSource {
 
     suspend fun saveAll(gameResponseList: List<GameResponse>)
 
-    suspend fun update(id: Long, gameRequest: GameRequest)
+    suspend fun update(id: Long, gameRequest: GameRequest): GameResponse?
 
     fun getAll(): Flow<List<GameResponse>>
 

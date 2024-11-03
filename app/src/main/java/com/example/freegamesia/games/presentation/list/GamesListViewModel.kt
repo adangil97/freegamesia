@@ -65,7 +65,7 @@ class GamesListViewModel @Inject constructor(
                     is Resource.Error -> {
                         val result = resource.result.orEmpty()
                         makeResult(
-                            gameResponseRespons = result,
+                            gameResponseList = result,
                             isFromError = true
                         )
                     }
@@ -75,11 +75,11 @@ class GamesListViewModel @Inject constructor(
     }
 
     private fun makeResult(
-        gameResponseRespons: List<GameResponse>,
+        gameResponseList: List<GameResponse>,
         isFromError: Boolean = false
     ) {
         mutableState.value = currentState().copy(
-            games = gameResponseRespons.map {
+            games = gameResponseList.map {
                 it.toGameUiModel()
             }.groupBy {
                 it.category

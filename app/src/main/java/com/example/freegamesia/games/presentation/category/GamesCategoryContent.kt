@@ -8,8 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.freegamesia.R
 import com.example.freegamesia.core.ds.CircularProgressBar
+import com.example.freegamesia.core.ds.SimpleContent
 import com.example.freegamesia.games.presentation.GameUiModel
 import com.example.freegamesia.games.presentation.list.GamesItemContent
 
@@ -23,16 +26,21 @@ fun GamesCategoryContent(
         if (gamesCategoryUiState.isLoading) {
             CircularProgressBar()
         } else {
-            LazyColumn {
-                items(gamesCategoryUiState.games, key = { it.id }) {
-                    GamesItemContent(
-                        game = it,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 18.dp, vertical = 12.dp)
-                            .clickable { onGameClick(it) }
-                    )
+            val games = gamesCategoryUiState.games
+            if (games.isNotEmpty()) {
+                LazyColumn {
+                    items(gamesCategoryUiState.games, key = { it.id }) {
+                        GamesItemContent(
+                            game = it,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 18.dp, vertical = 12.dp)
+                                .clickable { onGameClick(it) }
+                        )
+                    }
                 }
+            } else {
+                SimpleContent(msg = stringResource(id = R.string.no_data))
             }
         }
     }

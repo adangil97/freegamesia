@@ -12,7 +12,9 @@ data class GamesListUiState(
 
 sealed class GamesListUiActions {
 
-    data class Initial(val forceRefresh: Boolean = false) : GamesListUiActions()
+    data object Initial : GamesListUiActions()
+
+    data object Refresh : GamesListUiActions()
 
     data class Search(val query: String) : GamesListUiActions()
 

@@ -41,14 +41,14 @@ abstract class StateEffectViewModel<State, Action>(
     }
 
     fun sendAction(
-        action: Action? = getCurrentAction()
+        action: Action? = currentAction()
     ) {
         viewModelScope.launch {
             mutableActions.value = action
         }
     }
 
-    fun getCurrentAction() = mutableActions.value
+    fun currentAction() = mutableActions.value
 
     protected fun currentState() = mutableState.value
 }

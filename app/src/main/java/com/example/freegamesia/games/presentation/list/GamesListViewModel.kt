@@ -19,7 +19,7 @@ class GamesListViewModel @Inject constructor(
     private val searchGamesByCategory: SearchGamesByCategory
 ) : StateEffectViewModel<GamesListUiState, GamesListUiActions>(
     GamesListUiState(),
-    GamesListUiActions.Initial()
+    GamesListUiActions.Initial
 ) {
 
     fun initialize() {
@@ -28,7 +28,11 @@ class GamesListViewModel @Inject constructor(
                 request = {
                     when (it) {
                         is GamesListUiActions.Initial -> {
-                            getGames(it.forceRefresh)
+                            getGames()
+                        }
+
+                        GamesListUiActions.Refresh -> {
+                            getGames(forceRefresh = true)
                         }
 
                         is GamesListUiActions.Filter -> {
@@ -45,8 +49,9 @@ class GamesListViewModel @Inject constructor(
             ) { resource ->
                 when (resource) {
                     is Resource.Loading -> {
+                        val isRefresh = currentAction() is GamesListUiActions.Refresh
                         val result = resource.result.orEmpty()
-                        if (result.isEmpty()) {
+                        if (result.isEmpty() || isRefresh) {
                             mutableState.value = currentState().copy(isLoading = true)
                         } else {
                             makeResult(result)

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.freegamesia.R
+import com.example.freegamesia.core.ds.ShimmerComponent
 import com.example.freegamesia.core.ds.SimpleContent
 import com.example.freegamesia.core.ds.SimpleErrorContent
 import com.example.freegamesia.games.presentation.GameUiModel
@@ -130,10 +132,7 @@ fun GamesCategoryListContent(
     modifier: Modifier = Modifier,
     onGameClick: (GameUiModel) -> Unit
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(modifier = modifier) {
         Spacer(modifier = Modifier.padding(12.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.padding(12.dp))
@@ -218,5 +217,77 @@ fun GamesItemContent(
 
 @Composable
 fun GameListLoading(modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(5) {
+            GameListCategoryItemLoading()
+        }
+    }
+}
 
+@Composable
+fun GameListCategoryItemLoading(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.padding(12.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Spacer(modifier = Modifier.padding(12.dp))
+            ShimmerComponent(
+                modifier = Modifier
+                    .width(50.dp)
+                    .height(24.dp)
+                    .weight(1f)
+            )
+            Spacer(modifier = Modifier.padding(horizontal = 100.dp))
+            ShimmerComponent(
+                modifier = Modifier
+                    .size(32.dp)
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
+        }
+        Spacer(modifier = Modifier.padding(12.dp))
+        LazyRow {
+            items(5) {
+                GameListItemLoading(
+                    modifier = Modifier
+                        .padding(horizontal = 18.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun GameListItemLoading(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        ShimmerComponent(
+            modifier = Modifier
+                .width(300.dp)
+                .height(150.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
+        )
+        Spacer(modifier = Modifier.padding(8.dp))
+        ShimmerComponent(
+            modifier = Modifier
+                .width(150.dp)
+                .height(24.dp)
+                .padding(horizontal = 8.dp)
+        )
+        Spacer(modifier = Modifier.padding(4.dp))
+        ShimmerComponent(
+            modifier = Modifier
+                .width(300.dp)
+                .height(24.dp)
+                .padding(horizontal = 8.dp)
+        )
+        Spacer(modifier = Modifier.padding(2.dp))
+        ShimmerComponent(
+            modifier = Modifier
+                .width(300.dp)
+                .height(24.dp)
+                .padding(horizontal = 8.dp)
+        )
+    }
 }

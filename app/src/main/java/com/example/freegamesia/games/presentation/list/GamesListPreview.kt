@@ -32,14 +32,7 @@ fun GamesPreviewList() {
                     description = "Prueba 2",
                     category = "Prueba 2",
                     platform = "iOS"
-                ),
-                GameUiModel(
-                    id = 2,
-                    title = "Hola 2",
-                    description = "Prueba 2",
-                    category = "Prueba 2",
-                    platform = "iOS"
-                ),
+                )
             ),
         )
     ) {

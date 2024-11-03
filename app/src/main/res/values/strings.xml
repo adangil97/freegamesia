@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Free Games IA</string>
+    <string name="network_error_occurred">Ocurrió un error de red</string>
+    <string name="no_data">No se encontraron resultados</string>
 </resources>

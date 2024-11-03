@@ -9,6 +9,7 @@ import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,8 +32,13 @@ class GamesListViewModel @Inject constructor(
                         }
 
                         is GamesListUiActions.Refresh -> {
-                            mutableState.value = currentState().copy(isLoading = true)
-                            getGames(forceRefresh = true)
+                            if (currentState().query.isEmpty()) {
+                                mutableState.value = currentState().copy(isLoading = true)
+                                getGames(forceRefresh = true)
+                            } else {
+                                mutableState.value = currentState().copy(isLoading = false)
+                                flowOf()
+                            }
                         }
 
                         is GamesListUiActions.Search -> {

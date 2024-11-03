@@ -24,23 +24,23 @@ fun GamesListScreen(
     onGoToDetail: (Long) -> Unit
 ) {
     val screenState by gamesListViewModel.state.collectAsState()
-    val pullRefreshState = rememberPullToRefreshState()
-    PullToRefreshBox(
-        isRefreshing = screenState.isLoading,
-        state = pullRefreshState,
-        onRefresh = {
-            gamesListViewModel.sendAction(GamesListUiActions.Refresh())
-        }
-    ) {
-        Column {
-            Row(modifier = Modifier.padding(12.dp)) {
-                SearchBar(
-                    hint = stringResource(id = R.string.search),
-                    currentText = screenState.query
-                ) {
-                    gamesListViewModel.sendAction(GamesListUiActions.Search(it))
-                }
+    Column {
+        Row(modifier = Modifier.padding(12.dp)) {
+            SearchBar(
+                hint = stringResource(id = R.string.search),
+                currentText = screenState.query
+            ) {
+                gamesListViewModel.sendAction(GamesListUiActions.Search(it))
             }
+        }
+        val pullRefreshState = rememberPullToRefreshState()
+        PullToRefreshBox(
+            isRefreshing = screenState.isLoading,
+            state = pullRefreshState,
+            onRefresh = {
+                gamesListViewModel.sendAction(GamesListUiActions.Refresh())
+            }
+        ) {
             GamesListByStateContent(
                 gamesListState = screenState,
                 onRetry = {

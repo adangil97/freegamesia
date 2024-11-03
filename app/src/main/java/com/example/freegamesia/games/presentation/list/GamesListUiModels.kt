@@ -11,9 +11,9 @@ data class GamesListUiState(
 
 sealed class GamesListUiActions {
 
-    data object Initial : GamesListUiActions()
+    data class Initial(val currentTime: Long = System.currentTimeMillis()) : GamesListUiActions()
 
-    data object Refresh : GamesListUiActions()
+    data class Refresh(val currentTime: Long = System.currentTimeMillis()) : GamesListUiActions()
 
     data class Search(val query: String) : GamesListUiActions()
 }

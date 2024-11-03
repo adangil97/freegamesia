@@ -305,6 +305,7 @@ fun GameListItemLoading(modifier: Modifier = Modifier) {
 @Composable
 fun SearchBar(
     hint: String,
+    currentText: String,
     modifier: Modifier = Modifier,
     height: Dp = 40.dp,
     elevation: Dp = 3.dp,
@@ -313,7 +314,7 @@ fun SearchBar(
     onSearch: (String) -> Unit = {},
 ) {
     var isEnabled by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(currentText) }
     var active by remember { mutableStateOf(false) }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,22 +24,27 @@ fun GamesListScreen(
     onGoToDetail: (Long) -> Unit
 ) {
     val screenState by gamesListViewModel.state.collectAsState()
+    val pullRefreshState = rememberPullToRefreshState()
     PullToRefreshBox(
         isRefreshing = screenState.isLoading,
+        state = pullRefreshState,
         onRefresh = {
-            gamesListViewModel.sendAction(GamesListUiActions.Refresh)
+            gamesListViewModel.sendAction(GamesListUiActions.Refresh())
         }
     ) {
         Column {
             Row(modifier = Modifier.padding(12.dp)) {
-                SearchBar(hint = stringResource(id = R.string.search)) {
+                SearchBar(
+                    hint = stringResource(id = R.string.search),
+                    currentText = screenState.query
+                ) {
                     gamesListViewModel.sendAction(GamesListUiActions.Search(it))
                 }
             }
             GamesListByStateContent(
                 gamesListState = screenState,
                 onRetry = {
-                    gamesListViewModel.sendAction(GamesListUiActions.Initial)
+                    gamesListViewModel.sendAction(GamesListUiActions.Initial())
                 },
                 onCategoryClick = onGoToCategory
             ) {

@@ -18,7 +18,7 @@ class GamesListViewModel @Inject constructor(
     private val searchGamesByQuery: SearchGamesByQuery
 ) : StateEffectsViewModel<GamesListUiState, NoEffects, GamesListUiActions>(
     GamesListUiState(),
-    GamesListUiActions.Initial
+    GamesListUiActions.Initial()
 ) {
 
     fun initialize() {
@@ -30,7 +30,8 @@ class GamesListViewModel @Inject constructor(
                             getGames()
                         }
 
-                        GamesListUiActions.Refresh -> {
+                        is GamesListUiActions.Refresh -> {
+                            mutableState.value = currentState().copy(isLoading = true)
                             getGames(forceRefresh = true)
                         }
 

@@ -47,7 +47,7 @@ class GameDBDataSource @Inject constructor(
     }
 
     override fun searchByQuery(query: String): Flow<List<GameResponse>> {
-        return gameDao.getAllByQuery(query).map { gameEntityList ->
+        return gameDao.findAllByQuery(query).map { gameEntityList ->
             gameEntityList.map { gameEntity ->
                 gameEntity.toGame()
             }
@@ -55,7 +55,7 @@ class GameDBDataSource @Inject constructor(
     }
 
     override fun searchByCategory(category: String): Flow<List<GameResponse>> {
-        return gameDao.getAllByCategory(category).map { gameEntityList ->
+        return gameDao.findAllByCategory(category).map { gameEntityList ->
             gameEntityList.map { gameEntity ->
                 gameEntity.toGame()
             }

@@ -19,11 +19,11 @@ interface GameDao {
     @Query("SELECT * FROM GameEntity WHERE id = :id")
     suspend fun getById(id: Long): GameEntity?
 
-    @Query("SELECT * FROM GameEntity WHERE title LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
-    fun getAllByQuery(query: String): Flow<List<GameEntity>>
+    @Query("SELECT * FROM GameEntity WHERE category LIKE '%' || :query || '%' OR title LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
+    fun findAllByQuery(query: String): Flow<List<GameEntity>>
 
     @Query("SELECT * FROM GameEntity WHERE category = :category")
-    fun getAllByCategory(category: String): Flow<List<GameEntity>>
+    fun findAllByCategory(category: String): Flow<List<GameEntity>>
 
     @Delete
     fun delete(gameEntity: GameEntity)

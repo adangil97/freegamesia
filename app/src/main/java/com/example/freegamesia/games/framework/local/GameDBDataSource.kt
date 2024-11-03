@@ -1,7 +1,8 @@
 package com.example.freegamesia.games.framework.local
 
 import com.example.freegamesia.games.data.GameLocalDataSource
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.games.domain.GameRequest
+import com.example.freegamesia.games.domain.GameResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -12,13 +13,28 @@ class GameDBDataSource @Inject constructor(
     private val gameDao: GameDao
 ) : GameLocalDataSource {
 
-    override suspend fun saveAll(games: List<Game>) = withContext(Dispatchers.IO) {
-        games.forEach { game ->
-            gameDao.save(game.toGameEntity())
+    override suspend fun saveAll(gameResponseList: List<GameResponse>) =
+        withContext(Dispatchers.IO) {
+            gameResponseList.forEach { game ->
+                gameDao.save(game.toGameEntity())
+            }
+        }
+
+    override suspend fun update(id: Long, gameRequest: GameRequest) {
+        withContext(Dispatchers.IO) {
+            getById(id)?.let {
+                gameDao.save(
+                    it.toGameEntity().copy(
+                        title = gameRequest.title,
+                        platform = gameRequest.platform,
+                        description = gameRequest.description
+                    )
+                )
+            }
         }
     }
 
-    override fun getAll(): Flow<List<Game>> {
+    override fun getAll(): Flow<List<GameResponse>> {
         return gameDao.getAll().map { gameEntityList ->
             gameEntityList.map { gameEntity ->
                 gameEntity.toGame()
@@ -26,11 +42,11 @@ class GameDBDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getById(id: Long): Game? = withContext(Dispatchers.IO) {
+    override suspend fun getById(id: Long): GameResponse? = withContext(Dispatchers.IO) {
         gameDao.getById(id)?.toGame()
     }
 
-    override fun searchByQuery(query: String): Flow<List<Game>> {
+    override fun searchByQuery(query: String): Flow<List<GameResponse>> {
         return gameDao.getAllByQuery(query).map { gameEntityList ->
             gameEntityList.map { gameEntity ->
                 gameEntity.toGame()
@@ -38,11 +54,18 @@ class GameDBDataSource @Inject constructor(
         }
     }
 
-    override fun searchByCategory(category: String): Flow<List<Game>> {
+    override fun searchByCategory(category: String): Flow<List<GameResponse>> {
         return gameDao.getAllByCategory(category).map { gameEntityList ->
             gameEntityList.map { gameEntity ->
                 gameEntity.toGame()
             }
+        }
+    }
+
+    override suspend fun delete(id: Long) = withContext(Dispatchers.IO) {
+        getById(id)?.let {
+            gameDao.delete(it.toGameEntity())
+            it
         }
     }
 }

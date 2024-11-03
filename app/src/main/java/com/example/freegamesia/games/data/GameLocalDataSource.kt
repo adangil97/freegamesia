@@ -1,17 +1,22 @@
 package com.example.freegamesia.games.data
 
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.games.domain.GameRequest
+import com.example.freegamesia.games.domain.GameResponse
 import kotlinx.coroutines.flow.Flow
 
 interface GameLocalDataSource {
 
-    suspend fun saveAll(games: List<Game>)
+    suspend fun saveAll(gameResponseList: List<GameResponse>)
 
-    fun getAll(): Flow<List<Game>>
+    suspend fun update(id: Long, gameRequest: GameRequest)
 
-    suspend fun getById(id: Long): Game?
+    fun getAll(): Flow<List<GameResponse>>
 
-    fun searchByQuery(query: String): Flow<List<Game>>
+    suspend fun getById(id: Long): GameResponse?
 
-    fun searchByCategory(category: String): Flow<List<Game>>
+    fun searchByQuery(query: String): Flow<List<GameResponse>>
+
+    fun searchByCategory(category: String): Flow<List<GameResponse>>
+
+    suspend fun delete(id: Long): GameResponse?
 }

@@ -1,8 +1,8 @@
 package com.example.freegamesia.games.presentation
 
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.games.domain.GameResponse
 
-fun Game.toGameUiModel() = GameUiModel(
+fun GameResponse.toGameUiModel() = GameUiModel(
     id = id,
     title = title,
     description = description,

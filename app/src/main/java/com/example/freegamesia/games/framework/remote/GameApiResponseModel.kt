@@ -2,7 +2,7 @@ package com.example.freegamesia.games.framework.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class GameApiModel(
+data class GameApiResponseModel(
     @SerializedName("short_description")
     val shortDescription: String? = null,
     @SerializedName("thumbnail")

@@ -1,6 +1,7 @@
 package com.example.freegamesia.games.framework.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -23,4 +24,7 @@ interface GameDao {
 
     @Query("SELECT * FROM GameEntity WHERE category = :category")
     fun getAllByCategory(category: String): Flow<List<GameEntity>>
+
+    @Delete
+    fun delete(gameEntity: GameEntity)
 }

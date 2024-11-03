@@ -3,4 +3,7 @@
     <string name="network_error_occurred">Ocurrió un error de red</string>
     <string name="no_data">No se encontraron resultados</string>
     <string name="search">Buscar…</string>
+    <string name="update">Actualizar</string>
+    <string name="delete">Eliminar</string>
+    <string name="update_success">Juego Actualizado con exito</string>
 </resources>

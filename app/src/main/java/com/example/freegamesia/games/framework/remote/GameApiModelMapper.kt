@@ -1,9 +1,9 @@
 package com.example.freegamesia.games.framework.remote
 
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.games.domain.GameResponse
 import java.util.concurrent.TimeUnit
 
-fun GameApiModel.toGame() = Game(
+fun GameApiResponseModel.toGame() = GameResponse(
     id = id ?: 0,
     title = title.orEmpty(),
     description = shortDescription.orEmpty(),

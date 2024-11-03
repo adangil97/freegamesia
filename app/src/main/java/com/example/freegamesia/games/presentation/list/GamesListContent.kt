@@ -1,6 +1,5 @@
 package com.example.freegamesia.games.presentation.list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -47,8 +46,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.ColorPainter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -60,8 +57,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.example.freegamesia.R
+import com.example.freegamesia.core.ds.GamesHeaderImage
+import com.example.freegamesia.core.ds.GamesTag
 import com.example.freegamesia.core.ds.ShimmerComponent
 import com.example.freegamesia.core.ds.SimpleContent
 import com.example.freegamesia.core.ds.SimpleErrorContent
@@ -120,7 +118,7 @@ fun GamesListByStateContent(
                 .align(Alignment.BottomCenter)
                 .padding(8.dp)
         ) {
-            Snackbar(it, containerColor = MaterialTheme.colorScheme.errorContainer)
+            Snackbar(it, containerColor = MaterialTheme.colorScheme.error)
         }
     }
 }
@@ -193,36 +191,22 @@ fun GamesItemContent(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        Box(
+        GamesHeaderImage(
+            imageUrl = game.image,
             modifier = Modifier
                 .height(150.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = game.image,
-                    placeholder = ColorPainter(Color.LightGray)
-                ),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Box(
+            GamesTag(
+                tag = game.platform,
                 modifier = Modifier
                     .padding(8.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.Black.copy(alpha = .7f))
                     .padding(4.dp)
-                    .align(Alignment.BottomEnd),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = game.platform,
-                    color = Color.White,
-                    fontSize = 10.sp
-                )
-            }
+                    .align(Alignment.BottomEnd)
+            )
         }
         Spacer(modifier = Modifier.padding(8.dp))
         Text(

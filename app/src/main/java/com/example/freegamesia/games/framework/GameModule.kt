@@ -8,10 +8,12 @@ import com.example.freegamesia.games.framework.local.GameDBDataSource
 import com.example.freegamesia.games.framework.local.GameDao
 import com.example.freegamesia.games.framework.remote.GameApiClient
 import com.example.freegamesia.games.framework.remote.GameApiDataSource
+import com.example.freegamesia.games.usecases.DeleteGame
 import com.example.freegamesia.games.usecases.GetGameById
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByCategory
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
+import com.example.freegamesia.games.usecases.UpdateGame
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -67,5 +69,11 @@ abstract class GameModule {
         fun providesSearchGamesByQuery(
             gameRepository: GameRepository
         ) = SearchGamesByQuery(gameRepository)
+
+        @Provides
+        fun providesUpdateGame(gameRepository: GameRepository) = UpdateGame(gameRepository)
+
+        @Provides
+        fun providesDeleteGame(gameRepository: GameRepository) = DeleteGame(gameRepository)
     }
 }

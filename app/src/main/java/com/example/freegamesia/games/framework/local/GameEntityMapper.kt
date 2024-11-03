@@ -1,8 +1,8 @@
 package com.example.freegamesia.games.framework.local
 
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.games.domain.GameResponse
 
-fun GameEntity.toGame() = Game(
+fun GameEntity.toGame() = GameResponse(
     id = id,
     title = title,
     description = description,
@@ -15,7 +15,7 @@ fun GameEntity.toGame() = Game(
     requireUpdatedAt = requireUpdatedAt
 )
 
-fun Game.toGameEntity() = GameEntity(
+fun GameResponse.toGameEntity() = GameEntity(
     id = id,
     title = title,
     description = description,

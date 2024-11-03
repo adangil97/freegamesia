@@ -1,9 +1,10 @@
 package com.example.freegamesia.games.presentation.list
 
 import androidx.lifecycle.viewModelScope
+import com.example.freegamesia.core.NoEffects
 import com.example.freegamesia.core.Resource
-import com.example.freegamesia.core.StateActionsViewModel
-import com.example.freegamesia.games.domain.Game
+import com.example.freegamesia.core.StateEffectsViewModel
+import com.example.freegamesia.games.domain.GameResponse
 import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class GamesListViewModel @Inject constructor(
     private val getGames: GetGames,
     private val searchGamesByQuery: SearchGamesByQuery
-) : StateActionsViewModel<GamesListUiState, GamesListUiActions>(
+) : StateEffectsViewModel<GamesListUiState, NoEffects, GamesListUiActions>(
     GamesListUiState(),
     GamesListUiActions.Initial
 ) {
@@ -58,7 +59,7 @@ class GamesListViewModel @Inject constructor(
                     is Resource.Error -> {
                         val result = resource.result.orEmpty()
                         makeResult(
-                            games = result,
+                            gameResponseRespons = result,
                             isFromError = true
                         )
                     }
@@ -68,11 +69,11 @@ class GamesListViewModel @Inject constructor(
     }
 
     private fun makeResult(
-        games: List<Game>,
+        gameResponseRespons: List<GameResponse>,
         isFromError: Boolean = false
     ) {
         mutableState.value = currentState().copy(
-            games = games.map {
+            games = gameResponseRespons.map {
                 it.toGameUiModel()
             }.groupBy {
                 it.category

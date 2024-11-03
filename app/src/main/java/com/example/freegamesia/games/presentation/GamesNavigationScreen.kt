@@ -28,7 +28,9 @@ fun GamesNavigationScreen() {
             arguments = listOf(navArgument("gameId") { type = NavType.LongType })
         ) { backStackEntry ->
             val gameId = backStackEntry.arguments?.getLong("gameId") ?: 0
-            GameDetailScreen(gameId = gameId)
+            GameDetailScreen(gameId = gameId) {
+                navController.popBackStack()
+            }
         }
         composable(
             "games/category/{category}",

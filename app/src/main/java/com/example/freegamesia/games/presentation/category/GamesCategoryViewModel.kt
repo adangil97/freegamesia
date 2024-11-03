@@ -2,7 +2,8 @@ package com.example.freegamesia.games.presentation.category
 
 import androidx.lifecycle.viewModelScope
 import com.example.freegamesia.core.NoActions
-import com.example.freegamesia.core.StateActionsViewModel
+import com.example.freegamesia.core.NoEffects
+import com.example.freegamesia.core.StateEffectsViewModel
 import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.SearchGamesByCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GamesCategoryViewModel @Inject constructor(
     private val searchGamesByCategory: SearchGamesByCategory
-) : StateActionsViewModel<GamesCategoryUiState, NoActions>(GamesCategoryUiState()) {
+) : StateEffectsViewModel<GamesCategoryUiState, NoEffects, NoActions>(GamesCategoryUiState()) {
 
     fun initialize(category: String) {
         viewModelScope.launch {

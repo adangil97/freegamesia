@@ -1,6 +1,6 @@
 package com.example.freegamesia.games.domain
 
-data class Game(
+data class GameResponse(
     val id: Long,
     val title: String,
     val description: String,
@@ -11,4 +11,10 @@ data class Game(
     val url: String,
     val releaseDate: String,
     val requireUpdatedAt: Long
+)
+
+data class GameRequest(
+    val title: String,
+    val platform: String,
+    val description: String
 )

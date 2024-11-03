@@ -6,3 +6,10 @@ data class GameDetailUiState(
     val isLoading: Boolean = false,
     val gameUiModel: GameUiModel = GameUiModel()
 )
+
+sealed class GameDetailEffects {
+
+    data object UpdateSuccess : GameDetailEffects()
+
+    data object DeleteSuccess : GameDetailEffects()
+}

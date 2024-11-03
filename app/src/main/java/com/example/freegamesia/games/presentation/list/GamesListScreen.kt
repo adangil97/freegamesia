@@ -10,8 +10,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.freegamesia.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +30,7 @@ fun GamesListScreen(
     ) {
         Column {
             Row(modifier = Modifier.padding(12.dp)) {
-                SearchBar(hint = "Buscar...") {
+                SearchBar(hint = stringResource(id = R.string.search)) {
                     gamesListViewModel.sendAction(GamesListUiActions.Search(it))
                 }
             }

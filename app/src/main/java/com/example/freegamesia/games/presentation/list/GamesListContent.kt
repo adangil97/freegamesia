@@ -1,6 +1,7 @@
 package com.example.freegamesia.games.presentation.list
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -32,9 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.freegamesia.R
 import com.example.freegamesia.core.ds.SimpleContent
@@ -54,12 +59,16 @@ fun GamesListByStateContent(
         val scope = rememberCoroutineScope()
         val errorOccurred = stringResource(id = R.string.network_error_occurred)
         when {
-            gamesListState.isLoading -> GameListLoading()
+            gamesListState.isLoading -> {
+                GameListLoading()
+            }
 
-            gamesListState.games.isEmpty() && gamesListState.isFromError -> SimpleErrorContent(
-                msgError = errorOccurred,
-                onRetry = onRetry
-            )
+            gamesListState.games.isEmpty() && gamesListState.isFromError -> {
+                SimpleErrorContent(
+                    msgError = errorOccurred,
+                    onRetry = onRetry
+                )
+            }
 
             else -> {
                 if (gamesListState.games.isNotEmpty()) {
@@ -139,13 +148,12 @@ fun GamesCategoryListContent(
             Spacer(modifier = Modifier.padding(12.dp))
         }
         Spacer(modifier = Modifier.padding(12.dp))
-        LazyRow(verticalAlignment = Alignment.CenterVertically) {
+        LazyRow {
             items(games, key = { it.id }) {
                 GamesItemContent(
                     game = it,
                     modifier = Modifier
                         .width(300.dp)
-                        .height(150.dp)
                         .padding(horizontal = 18.dp)
                         .clickable { onGameClick(it) }
                 )
@@ -159,22 +167,52 @@ fun GamesItemContent(
     game: GameUiModel,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(modifier = modifier) {
         Box(
             modifier = Modifier
+                .height(150.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
         ) {
             Image(
-                painter = rememberAsyncImagePainter(game.image),
+                painter = rememberAsyncImagePainter(
+                    model = game.image,
+                    placeholder = ColorPainter(Color.LightGray)
+                ),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.Black.copy(alpha = .7f))
+                    .padding(4.dp)
+                    .align(Alignment.BottomEnd),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = game.platform,
+                    color = Color.White,
+                    fontSize = 10.sp
+                )
+            }
         }
+        Spacer(modifier = Modifier.padding(8.dp))
+        Text(
+            text = game.title,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+        Spacer(modifier = Modifier.padding(4.dp))
+        Text(
+            text = game.description,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
 

@@ -18,15 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun SimpleErrorContent(
     msgError: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     onRetry: () -> Unit
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -34,7 +38,10 @@ fun SimpleErrorContent(
             Text(text = msgError)
             Spacer(modifier = Modifier.padding(8.dp))
             Button(onClick = onRetry) {
-                Text(text = "Reintentar")
+                Text(
+                    text = "Reintentar",
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
@@ -47,23 +54,28 @@ fun SimpleContent(
     fontWeight: FontWeight = FontWeight.Bold,
     imageVector: ImageVector = Icons.Default.SearchOff
 ) {
-    Column(
+    Box(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            imageVector,
-            modifier = Modifier
-                .padding(bottom = 40.dp)
-                .size(160.dp),
-            contentDescription = null
-        )
-        Text(
-            msg,
-            fontWeight = fontWeight,
-            modifier = Modifier.fillMaxWidth(.8f),
-            maxLines = 2
-        )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                imageVector,
+                modifier = Modifier
+                    .padding(bottom = 40.dp)
+                    .size(160.dp),
+                contentDescription = null
+            )
+            Text(
+                msg,
+                fontWeight = fontWeight,
+                modifier = Modifier.fillMaxWidth(.8f),
+                maxLines = 2,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

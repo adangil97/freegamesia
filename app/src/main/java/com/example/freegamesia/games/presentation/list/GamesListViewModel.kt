@@ -3,6 +3,7 @@ package com.example.freegamesia.games.presentation.list
 import androidx.lifecycle.viewModelScope
 import com.example.freegamesia.core.Resource
 import com.example.freegamesia.core.StateEffectViewModel
+import com.example.freegamesia.games.domain.Game
 import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByCategory
@@ -44,34 +45,42 @@ class GamesListViewModel @Inject constructor(
             ) { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        mutableState.value = currentState().copy(isLoading = true)
+                        val result = resource.result.orEmpty()
+                        if (result.isEmpty()) {
+                            mutableState.value = currentState().copy(isLoading = true)
+                        } else {
+                            makeResult(result)
+                        }
                     }
 
                     is Resource.Success -> {
-                        mutableState.value = currentState().copy(
-                            isLoading = false,
-                            games = resource.result.map {
-                                it.toGameUiModel()
-                            }.groupBy {
-                                it.category
-                            }
-                        )
+                        makeResult(resource.result)
                     }
 
                     is Resource.Error -> {
                         val result = resource.result.orEmpty()
-                        mutableState.value = currentState().copy(
-                            games = result.map {
-                                it.toGameUiModel()
-                            }.groupBy {
-                                it.category
-                            },
-                            isLoading = false,
+                        makeResult(
+                            games = result,
                             isFromError = true
                         )
                     }
                 }
             }
         }
+    }
+
+    private fun makeResult(
+        games: List<Game>,
+        isFromError: Boolean = false
+    ) {
+        mutableState.value = currentState().copy(
+            games = games.map {
+                it.toGameUiModel()
+            }.groupBy {
+                it.category
+            },
+            isLoading = false,
+            isFromError = isFromError
+        )
     }
 }

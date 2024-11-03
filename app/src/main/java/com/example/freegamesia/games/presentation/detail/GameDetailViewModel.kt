@@ -2,7 +2,7 @@ package com.example.freegamesia.games.presentation.detail
 
 import androidx.lifecycle.viewModelScope
 import com.example.freegamesia.core.NoActions
-import com.example.freegamesia.core.StateEffectViewModel
+import com.example.freegamesia.core.StateActionsViewModel
 import com.example.freegamesia.games.presentation.GameUiModel
 import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.GetGameById
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     private val getGameById: GetGameById
-) : StateEffectViewModel<GameDetailUiState, NoActions>(GameDetailUiState()) {
+) : StateActionsViewModel<GameDetailUiState, NoActions>(GameDetailUiState()) {
 
     fun getById(id: Long) {
         viewModelScope.launch {

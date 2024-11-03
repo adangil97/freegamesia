@@ -19,7 +19,8 @@ import com.example.freegamesia.R
 @Composable
 fun GamesListScreen(
     gamesListViewModel: GamesListViewModel = hiltViewModel(),
-    onNavigate: (Long) -> Unit
+    onGoToCategory: (String) -> Unit,
+    onGoToDetail: (Long) -> Unit
 ) {
     val screenState by gamesListViewModel.state.collectAsState()
     PullToRefreshBox(
@@ -38,9 +39,10 @@ fun GamesListScreen(
                 gamesListState = screenState,
                 onRetry = {
                     gamesListViewModel.sendAction(GamesListUiActions.Initial)
-                }
+                },
+                onCategoryClick = onGoToCategory
             ) {
-                onNavigate(it.id)
+                onGoToDetail(it.id)
             }
         }
     }

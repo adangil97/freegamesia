@@ -2,11 +2,10 @@ package com.example.freegamesia.games.presentation.list
 
 import androidx.lifecycle.viewModelScope
 import com.example.freegamesia.core.Resource
-import com.example.freegamesia.core.StateEffectViewModel
+import com.example.freegamesia.core.StateActionsViewModel
 import com.example.freegamesia.games.domain.Game
 import com.example.freegamesia.games.presentation.toGameUiModel
 import com.example.freegamesia.games.usecases.GetGames
-import com.example.freegamesia.games.usecases.SearchGamesByCategory
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,9 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GamesListViewModel @Inject constructor(
     private val getGames: GetGames,
-    private val searchGamesByQuery: SearchGamesByQuery,
-    private val searchGamesByCategory: SearchGamesByCategory
-) : StateEffectViewModel<GamesListUiState, GamesListUiActions>(
+    private val searchGamesByQuery: SearchGamesByQuery
+) : StateActionsViewModel<GamesListUiState, GamesListUiActions>(
     GamesListUiState(),
     GamesListUiActions.Initial
 ) {
@@ -33,11 +31,6 @@ class GamesListViewModel @Inject constructor(
 
                         GamesListUiActions.Refresh -> {
                             getGames(forceRefresh = true)
-                        }
-
-                        is GamesListUiActions.Filter -> {
-                            mutableState.value = currentState().copy(category = it.category)
-                            searchGamesByCategory(it.category)
                         }
 
                         is GamesListUiActions.Search -> {

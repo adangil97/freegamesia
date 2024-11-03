@@ -73,6 +73,7 @@ fun GamesListByStateContent(
     gamesListState: GamesListUiState,
     modifier: Modifier = Modifier,
     onRetry: () -> Unit,
+    onCategoryClick: (String) -> Unit,
     onGameClick: (GameUiModel) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -95,7 +96,8 @@ fun GamesListByStateContent(
                 if (gamesListState.games.isNotEmpty()) {
                     GamesListContent(
                         gamesMap = gamesListState.games,
-                        onGameClick = onGameClick
+                        onGameClick = onGameClick,
+                        onCategoryClick = onCategoryClick
                     )
                 } else {
                     SimpleContent(msg = stringResource(id = R.string.no_data))
@@ -127,6 +129,7 @@ fun GamesListByStateContent(
 fun GamesListContent(
     gamesMap: Map<String, List<GameUiModel>>,
     modifier: Modifier = Modifier,
+    onCategoryClick: (String) -> Unit,
     onGameClick: (GameUiModel) -> Unit
 ) {
     LazyColumn(
@@ -138,6 +141,9 @@ fun GamesListContent(
             GamesCategoryListContent(
                 category = category,
                 games = games,
+                modifier = Modifier.clickable {
+                    onCategoryClick(category)
+                },
                 onGameClick = onGameClick
             )
         }
@@ -177,6 +183,7 @@ fun GamesCategoryListContent(
                 )
             }
         }
+        Spacer(modifier = Modifier.padding(12.dp))
     }
 }
 

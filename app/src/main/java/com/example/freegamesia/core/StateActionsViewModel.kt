@@ -18,7 +18,7 @@ typealias NoActions = Unit
  * Simple MVI ViewModel.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class StateEffectViewModel<State, Action>(
+abstract class StateActionsViewModel<State, Action>(
     initialState: State,
     initialAction: Action? = null
 ) : ViewModel() {

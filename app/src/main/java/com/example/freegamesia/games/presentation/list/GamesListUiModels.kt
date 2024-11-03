@@ -6,7 +6,6 @@ data class GamesListUiState(
     val isLoading: Boolean = true,
     val games: Map<String, List<GameUiModel>> = mapOf(),
     val query: String = "",
-    val category: String = "",
     val isFromError: Boolean = false
 )
 
@@ -17,6 +16,4 @@ sealed class GamesListUiActions {
     data object Refresh : GamesListUiActions()
 
     data class Search(val query: String) : GamesListUiActions()
-
-    data class Filter(val category: String) : GamesListUiActions()
 }

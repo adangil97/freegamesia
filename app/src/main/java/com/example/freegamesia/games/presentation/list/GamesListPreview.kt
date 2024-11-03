@@ -34,7 +34,8 @@ fun GamesPreviewList() {
                     platform = "iOS"
                 )
             ),
-        )
+        ),
+        onCategoryClick = {}
     ) {
 
     }

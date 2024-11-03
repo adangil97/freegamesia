@@ -13,6 +13,7 @@ import com.example.freegamesia.games.usecases.GetGameById
 import com.example.freegamesia.games.usecases.GetGames
 import com.example.freegamesia.games.usecases.SearchGamesByCategory
 import com.example.freegamesia.games.usecases.SearchGamesByQuery
+import com.example.freegamesia.games.usecases.SearchGamesWithCategoryByQuery
 import com.example.freegamesia.games.usecases.UpdateGame
 import dagger.Binds
 import dagger.Module
@@ -75,5 +76,10 @@ abstract class GameModule {
 
         @Provides
         fun providesDeleteGame(gameRepository: GameRepository) = DeleteGame(gameRepository)
+
+        @Provides
+        fun providesSearchGamesWithCategoryByQuery(
+            gameRepository: GameRepository
+        ) = SearchGamesWithCategoryByQuery(gameRepository)
     }
 }

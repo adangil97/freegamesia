@@ -42,5 +42,10 @@ class GameRepository(
 
     fun searchByCategory(category: String) = gameLocalDataSource.searchByCategory(category)
 
+    fun searchWithCategoryByQuery(
+        category: String,
+        query: String
+    ) = gameLocalDataSource.searchWithCategoryByQuery(category, query)
+
     suspend fun delete(id: Long) = gameLocalDataSource.delete(id)
 }

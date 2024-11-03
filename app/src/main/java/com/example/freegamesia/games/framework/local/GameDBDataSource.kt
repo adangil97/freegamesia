@@ -62,6 +62,20 @@ class GameDBDataSource @Inject constructor(
         }
     }
 
+    override fun searchWithCategoryByQuery(
+        category: String,
+        query: String
+    ): Flow<List<GameResponse>> {
+        return gameDao.findAllWithCategoryByQuery(
+            category = category,
+            query = query
+        ).map { gameEntityList ->
+            gameEntityList.map { gameEntity ->
+                gameEntity.toGame()
+            }
+        }
+    }
+
     override suspend fun delete(id: Long) = withContext(Dispatchers.IO) {
         getById(id)?.let {
             gameDao.delete(it.toGameEntity())

@@ -25,6 +25,9 @@ interface GameDao {
     @Query("SELECT * FROM GameEntity WHERE category = :category")
     fun findAllByCategory(category: String): Flow<List<GameEntity>>
 
+    @Query("SELECT * FROM GameEntity WHERE category = :category AND (title LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%')")
+    fun findAllWithCategoryByQuery(category: String, query: String): Flow<List<GameEntity>>
+
     @Delete
     fun delete(gameEntity: GameEntity)
 }

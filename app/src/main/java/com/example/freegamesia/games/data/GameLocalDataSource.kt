@@ -18,5 +18,7 @@ interface GameLocalDataSource {
 
     fun searchByCategory(category: String): Flow<List<GameResponse>>
 
+    fun searchWithCategoryByQuery(category: String, query: String): Flow<List<GameResponse>>
+
     suspend fun delete(id: Long): GameResponse?
 }

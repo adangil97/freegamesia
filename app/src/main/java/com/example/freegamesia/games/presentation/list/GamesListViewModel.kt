@@ -18,8 +18,8 @@ class GamesListViewModel @Inject constructor(
     private val getGames: GetGames,
     private val searchGamesByQuery: SearchGamesByQuery
 ) : StateEffectsViewModel<GamesListUiState, NoEffects, GamesListUiActions>(
-    GamesListUiState(),
-    GamesListUiActions.Initial()
+    initialState = GamesListUiState(),
+    initialAction = GamesListUiActions.Initial()
 ) {
 
     fun initialize() {

@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.freegamesia.R
+import com.example.freegamesia.core.ds.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

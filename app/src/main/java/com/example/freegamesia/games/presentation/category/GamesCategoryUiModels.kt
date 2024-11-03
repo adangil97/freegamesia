@@ -4,5 +4,13 @@ import com.example.freegamesia.games.presentation.GameUiModel
 
 data class GamesCategoryUiState(
     val isLoading: Boolean = false,
-    val games: List<GameUiModel> = listOf()
+    val games: List<GameUiModel> = listOf(),
+    val query: String = ""
 )
+
+sealed class GamesCategoryUiActions {
+
+    data object Initial : GamesCategoryUiActions()
+
+    data class Search(val query: String) : GamesCategoryUiActions()
+}

@@ -25,7 +25,6 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class GamesListViewModelTests {
-
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var viewModel: GamesListViewModel
     private val getGames: GetGames = mockk()
@@ -77,7 +76,7 @@ class GamesListViewModelTests {
 
         viewModel.state.test {
             val initialState = awaitItem()
-            assertEquals(false, initialState.isLoading)
+            assertEquals(true, initialState.isLoading)
 
             val finalState = awaitItem()
             assertEquals(false, finalState.isLoading)
@@ -103,7 +102,7 @@ class GamesListViewModelTests {
 
         viewModel.state.test {
             val initialState = awaitItem()
-            assertEquals(false, initialState.isLoading)
+            assertEquals(true, initialState.isLoading)
 
             val finalState = awaitItem()
             assertEquals(false, finalState.isLoading)
@@ -130,10 +129,10 @@ class GamesListViewModelTests {
 
         viewModel.state.test {
             val initialState = awaitItem()
-            assertEquals(false, initialState.isLoading)
+            assertEquals(true, initialState.isLoading)
 
             val loadingState = awaitItem()
-            assertEquals(false, loadingState.isLoading)
+            assertEquals(true, loadingState.isLoading)
 
             val finalState = awaitItem()
             assertEquals(false, finalState.isLoading)

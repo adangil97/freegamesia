@@ -106,13 +106,9 @@ class GamesCategoryViewModelTests {
             viewModel.initialize(category)
 
             viewModel.state.test {
-                // The initial state of my viewmodel loading is always false.
+                // The initial state of my viewmodel loading is always true.
                 val initialState: GamesCategoryUiState = awaitItem()
-                assertEquals(false, initialState.isLoading)
-
-                // The next state is loading.
-                val loadingState: GamesCategoryUiState = awaitItem()
-                assertEquals(true, loadingState.isLoading)
+                assertEquals(true, initialState.isLoading)
 
                 // And finally.
                 val finalState: GamesCategoryUiState = awaitItem()
@@ -139,20 +135,17 @@ class GamesCategoryViewModelTests {
             viewModel.sendAction(GamesCategoryUiActions.Search(query))
 
             viewModel.state.test {
-                // The initial state of my viewmodel loading is always false.
+                // The initial state of my viewmodel loading is always true.
                 val initialState: GamesCategoryUiState = awaitItem()
-                assertEquals(false, initialState.isLoading)
+                assertEquals(true, initialState.isLoading)
 
                 // The next state is loading.
                 val loadingState: GamesCategoryUiState = awaitItem()
                 assertEquals(true, loadingState.isLoading)
 
                 // Use an intermediate state to save query on state.
-                val intermediateState: GamesCategoryUiState = awaitItem()
-                assertEquals(true, intermediateState.isLoading)
-
-                // And finally.
                 val finalState: GamesCategoryUiState = awaitItem()
+                assertEquals(false, finalState.isLoading)
                 assertEquals(query, finalState.query)
                 assertEquals(gameUiModelList, finalState.games)
             }

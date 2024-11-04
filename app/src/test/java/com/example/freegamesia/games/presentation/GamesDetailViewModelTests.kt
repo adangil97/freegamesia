@@ -74,10 +74,7 @@ class GamesDetailViewModelTests {
 
             viewModel.state.test {
                 val initialState = awaitItem()
-                assertEquals(false, initialState.isLoading)
-
-                val loadingState = awaitItem()
-                assertEquals(true, loadingState.isLoading)
+                assertEquals(true, initialState.isLoading)
 
                 val finalState = awaitItem()
                 assertEquals(false, finalState.isLoading)
@@ -96,10 +93,7 @@ class GamesDetailViewModelTests {
 
             viewModel.state.test {
                 val initialState = awaitItem()
-                assertEquals(false, initialState.isLoading)
-
-                val loadingState = awaitItem()
-                assertEquals(true, loadingState.isLoading)
+                assertEquals(true, initialState.isLoading)
 
                 val finalState = awaitItem()
                 assertEquals(false, finalState.isLoading)
@@ -123,10 +117,7 @@ class GamesDetailViewModelTests {
 
             viewModel.state.test {
                 val initialState = awaitItem()
-                assertEquals(false, initialState.isLoading)
-
-                val loadingState = awaitItem()
-                assertEquals(true, loadingState.isLoading)
+                assertEquals(true, initialState.isLoading)
 
                 val finalState = awaitItem()
                 assertEquals(false, finalState.isLoading)

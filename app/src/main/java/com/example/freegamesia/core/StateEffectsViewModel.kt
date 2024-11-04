@@ -51,7 +51,7 @@ abstract class StateEffectsViewModel<State, Effect, Action>(
 
     protected fun launchEffect(
         effect: Effect,
-        withDelay: Long? = 1000
+        withDelay: Long? = 100
     ) {
         viewModelScope.launch {
             mutableEffects.value = effect

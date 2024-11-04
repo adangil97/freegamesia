@@ -32,6 +32,7 @@ class GamesListViewModel @Inject constructor(
 
                         is GamesListUiActions.Refresh -> {
                             val currentQuery = currentState().query
+                            mutableState.value = currentState().copy(isLoading = true)
                             if (currentQuery.isEmpty()) {
                                 getGames(forceRefresh = true)
                             } else {

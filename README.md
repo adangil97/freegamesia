@@ -1,4 +1,4 @@
-# rappi-marvel
+# Free Games
 
 <H1>MVVM Clean Architecture</H1>
 

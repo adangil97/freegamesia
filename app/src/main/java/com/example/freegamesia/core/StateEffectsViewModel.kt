@@ -62,13 +62,21 @@ abstract class StateEffectsViewModel<State, Effect, Action>(
         }
     }
 
-    fun sendAction(action: Action? = currentAction()) {
+    fun sendAction(
+        action: Action? = currentAction(),
+        disposableDelay: Long? = null
+    ) {
         viewModelScope.launch {
+            val currentAction = currentAction()
             mutableActions.value = action
+            disposableDelay?.let {
+                delay(it)
+                mutableActions.value = currentAction
+            }
         }
     }
 
-    private fun currentAction() = mutableActions.value
+    fun currentAction() = mutableActions.value
 
     fun updateState(newState: State) {
         mutableState.value = newState

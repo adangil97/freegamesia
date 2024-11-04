@@ -50,7 +50,8 @@ class GamesListViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Loading -> {
                         val result = resource.result.orEmpty()
-                        if (result.isEmpty()) {
+                        val isRefresh = currentAction() is GamesListUiActions.Refresh
+                        if (result.isEmpty() || isRefresh) {
                             mutableState.value = currentState().copy(isLoading = true)
                         } else {
                             makeResult(result)

@@ -39,7 +39,10 @@ fun GamesListScreen(
             isRefreshing = screenState.isLoading,
             state = pullRefreshState,
             onRefresh = {
-                gamesListViewModel.sendAction(GamesListUiActions.Refresh())
+                gamesListViewModel.sendAction(
+                    action = GamesListUiActions.Refresh(),
+                    disposableDelay = 5000 // five seconds to refresh or dispose
+                )
             }
         ) {
             GamesListByStateContent(

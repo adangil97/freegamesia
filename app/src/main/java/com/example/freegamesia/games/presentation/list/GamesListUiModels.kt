@@ -3,7 +3,7 @@ package com.example.freegamesia.games.presentation.list
 import com.example.freegamesia.games.presentation.GameUiModel
 
 data class GamesListUiState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val games: Map<String, List<GameUiModel>> = mapOf(),
     val query: String = "",
     val isFromError: Boolean = false

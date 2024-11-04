@@ -68,7 +68,7 @@ abstract class StateEffectsViewModel<State, Effect, Action>(
         }
     }
 
-    fun currentAction() = mutableActions.value
+    private fun currentAction() = mutableActions.value
 
     fun updateState(newState: State) {
         mutableState.value = newState

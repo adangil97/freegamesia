@@ -13,7 +13,6 @@
       <li><p>UI en general (Jetpack Compose): Se encargan de mostrar las vistas y navegación al usuario</p></li>
       <li><p>ViewModels: Realizan la comunicación con los casos de uso correspondientes, aqui se aplica MVI</p></li>
       <li><p>States, Events: Forman Parte de la arquitectura MVI para sellar contratos de llamadas</p></li>
-      <li><p>Module: Inyección de dependencias de los casos de uso a usar en ViewModel</p></li>
     </ul>
   </li>
   <li>
